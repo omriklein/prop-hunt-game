@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://cfeg6eutf6fn3"]
+
+[ext_resource type="Script" uid="uid://d3ll3dbvbj442" path="res://scripts/props/rock.gd" id="1_hhaaw"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_upmtm"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hhaaw"]
+radius = 0.12303674
+
+[node name="Rock" type="RigidBody3D" unique_id=59209455]
+gravity_scale = 0.3
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_hhaaw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1667059749]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+mesh = SubResource("SphereMesh_upmtm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2035422335]
+shape = SubResource("SphereShape3D_hhaaw")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

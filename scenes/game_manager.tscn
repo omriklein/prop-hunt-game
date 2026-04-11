@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://cd6pqkmjt7okj"]
+
+[ext_resource type="Script" uid="uid://b8sitdet8kx0d" path="res://scripts/game_manager.gd" id="1_hwd4i"]
+
+[node name="GameManager" type="Node" unique_id=1538932608]
+script = ExtResource("1_hwd4i")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=2041831247]
+spawn_path = NodePath("..")

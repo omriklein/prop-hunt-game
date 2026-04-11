@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://pdnsblac8fns"]
+
+[ext_resource type="Script" uid="uid://dj3qc11p7a6mm" path="res://scripts/rock_crate.gd" id="1_mvxso"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_630kn"]
+albedo_color = Color(0.27450982, 0, 0.09019608, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mvxso"]
+material = SubResource("StandardMaterial3D_630kn")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pmr5v"]
+
+[node name="RockCrate" type="Area3D" unique_id=1514006578]
+script = ExtResource("1_mvxso")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1717493719]
+mesh = SubResource("BoxMesh_mvxso")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=139586322]
+shape = SubResource("BoxShape3D_pmr5v")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

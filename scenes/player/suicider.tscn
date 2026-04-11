@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://c8fdb7lvwhqe0"]
+
+[ext_resource type="Script" uid="uid://b13d68vtcy2n7" path="res://scripts/suicider_controller.gd" id="1_8qbar"]
+[ext_resource type="PackedScene" uid="uid://b3lk73br0g3" path="res://scenes/ui/pause_menu.tscn" id="2_qri23"]
+[ext_resource type="PackedScene" uid="uid://cgwl16a8ut5yi" path="res://assets/House plant.glb" id="3_i74gf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3r5kd"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_3mfqm"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8qbar"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_8qbar"]
+radius = 3.0041265
+
+[node name="Suicider" type="CharacterBody3D" unique_id=629524130]
+script = ExtResource("1_8qbar")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1583528822]
+shape = SubResource("BoxShape3D_3r5kd")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=506286828]
+visible = false
+mesh = SubResource("BoxMesh_3mfqm")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="." unique_id=2090703788]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0882946, 1.686018)
+spring_length = 4.0
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D" unique_id=1933619805]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=881610958]
+replication_config = SubResource("SceneReplicationConfig_8qbar")
+visibility_update_mode = 1
+
+[node name="ExplosionArea" type="Area3D" parent="." unique_id=312482537]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExplosionArea" unique_id=493638550]
+shape = SubResource("SphereShape3D_8qbar")
+
+[node name="PauseMenu" parent="." unique_id=1890610406 instance=ExtResource("2_qri23")]
+
+[node name="House plant" parent="." unique_id=448866338 instance=ExtResource("3_i74gf")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.4967965, 0)

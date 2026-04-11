@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://bi36yl46kos8e"]
+
+[ext_resource type="Script" uid="uid://d33ibpedgabi0" path="res://scripts/survivor_controller.gd" id="1_ftb0p"]
+[ext_resource type="PackedScene" uid="uid://b3lk73br0g3" path="res://scenes/ui/pause_menu.tscn" id="2_lbosi"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qwepw"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ftb0p"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ftb0p"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="Survivor" type="CharacterBody3D" unique_id=697928002]
+script = ExtResource("1_ftb0p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1883379158]
+shape = SubResource("CapsuleShape3D_qwepw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=815788325]
+mesh = SubResource("CapsuleMesh_ftb0p")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=33344443]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.68410945, 0)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1787954973]
+replication_config = SubResource("SceneReplicationConfig_ftb0p")
+visibility_update_mode = 1
+
+[node name="PauseMenu" parent="." unique_id=1890610406 instance=ExtResource("2_lbosi")]

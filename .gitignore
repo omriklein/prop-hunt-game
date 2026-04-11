@@ -1,0 +1,9 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Godot import metadata (auto-generated, not needed in source control)
+*.import
+
+# Export credentials — may contain signing keys/passwords
+export_credentials.cfg

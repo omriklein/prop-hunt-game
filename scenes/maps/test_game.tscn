@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://ckaicjvojbv4i"]
+
+[ext_resource type="Script" uid="uid://bbp8kgg4rps7o" path="res://scripts/game_ui.gd" id="1_x02ha"]
+[ext_resource type="PackedScene" uid="uid://ceof7cf5ne8kr" path="res://scenes/maps/map.tscn" id="2_qkai7"]
+[ext_resource type="PackedScene" uid="uid://cd6pqkmjt7okj" path="res://scenes/game_manager.tscn" id="3_x02ha"]
+
+[node name="TestGame" type="Node3D" unique_id=889030219]
+script = ExtResource("1_x02ha")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=962212394]
+transform = Transform3D(0.86542267, 0.33196154, -0.37529343, 0.42401606, -0.086182535, 0.9015447, 0.26693445, -0.93934774, -0.2153413, 0, 16.7935, 35.995747)
+shadow_enabled = true
+shadow_opacity = 0.55
+
+[node name="GameManager" parent="." unique_id=1538932608 instance=ExtResource("3_x02ha")]
+
+[node name="CrateSpawner" type="MultiplayerSpawner" parent="GameManager" unique_id=641100900]
+_spawnable_scenes = PackedStringArray("uid://pdnsblac8fns")
+spawn_path = NodePath("../../Crates")
+
+[node name="Map" parent="." unique_id=489180715 instance=ExtResource("2_qkai7")]
+
+[node name="InfoDisplay" type="CanvasLayer" parent="." unique_id=610157102]
+
+[node name="IPLabel" type="Label" parent="InfoDisplay" unique_id=599652736]
+offset_left = 38.0
+offset_top = 34.0
+offset_right = 232.0
+offset_bottom = 95.0
+text = "Game IP: 127.0.0.1"
+
+[node name="Scores" type="Label" parent="InfoDisplay" unique_id=1891870321]
+offset_left = 43.0
+offset_top = 66.0
+offset_right = 188.0
+offset_bottom = 238.0
+text = "No kills yet"
+
+[node name="TimerLabel" type="Label" parent="InfoDisplay" unique_id=667089893]
+offset_left = 487.0
+offset_top = 21.0
+offset_right = 574.0
+offset_bottom = 54.0
+text = "2:00"
+horizontal_alignment = 1
+
+[node name="RoundTimer" type="Timer" parent="." unique_id=786795279]
+wait_time = 120.0
+one_shot = true
+
+[node name="SyncTimer" type="Timer" parent="." unique_id=909870046]
+
+[node name="CratesSpawnPoints" type="Node3D" parent="." unique_id=95369078]
+
+[node name="Spawn1" type="Node3D" parent="CratesSpawnPoints" unique_id=1309917541]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.004, 0.5, -11.917)
+
+[node name="Spawn2" type="Node3D" parent="CratesSpawnPoints" unique_id=225375581]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.623868, 0.5360174, -6.1472034)
+
+[node name="Spawn3" type="Node3D" parent="CratesSpawnPoints" unique_id=824006340]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.533, 0.5, -0.992)
+
+[node name="Spawn4" type="Node3D" parent="CratesSpawnPoints" unique_id=1269431131]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.475136, 0.5, 26.060406)
+
+[node name="Crates" type="Node3D" parent="." unique_id=1170451382]
+
+[connection signal="timeout" from="RoundTimer" to="GameManager" method="_on_round_timer_timeout"]
+[connection signal="timeout" from="SyncTimer" to="GameManager" method="_on_sync_timer_timeout"]

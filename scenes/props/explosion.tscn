@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://bi8vtvethqr3r"]
+
+[ext_resource type="Script" uid="uid://c0aexu0bwmkdn" path="res://scripts/explosion.gd" id="1_gm4qe"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gm4qe"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_gm4qe"]
+material = SubResource("StandardMaterial3D_gm4qe")
+radius = 0.05
+height = 0.1
+
+[sub_resource type="Curve" id="Curve_x48v6"]
+_data = [Vector2(0.0025575422, 1), 0.0, -1.6522118, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_lfxm2"]
+colors = PackedColorArray(0.6056719, 0.59885573, 0.18474352, 1, 0.69411767, 0.38431373, 0, 1)
+
+[node name="Explosion" type="CPUParticles3D" unique_id=1601471104]
+emitting = false
+amount = 150
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+mesh = SubResource("SphereMesh_gm4qe")
+spread = 180.0
+gravity = Vector3(0, -4, 0)
+initial_velocity_min = 4.0
+initial_velocity_max = 10.0
+scale_amount_min = 0.5
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_x48v6")
+color = Color(0.8666667, 0.627451, 0.08627451, 1)
+color_ramp = SubResource("Gradient_lfxm2")
+script = ExtResource("1_gm4qe")

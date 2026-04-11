@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://c34vyib10pyrc"]
+
+[ext_resource type="Script" uid="uid://xvhf5q562e8l" path="res://scripts/main_menu.gd" id="1_l6cm7"]
+
+[node name="MainMenu" type="Node2D" unique_id=1766947521]
+position = Vector2(446, 334)
+script = ExtResource("1_l6cm7")
+
+[node name="HostButton" type="Button" parent="." unique_id=220084502]
+offset_left = 8.0
+offset_top = 5.0
+offset_right = 102.0
+offset_bottom = 36.0
+text = "Host Game"
+metadata/_edit_use_anchors_ = true
+
+[node name="JoinButton" type="Button" parent="." unique_id=994414272]
+offset_left = 8.0
+offset_top = 43.0
+offset_right = 95.0
+offset_bottom = 74.0
+text = "Join Game"
+metadata/_edit_use_anchors_ = true
+
+[node name="IPText" type="TextEdit" parent="." unique_id=1127413323]
+offset_left = 108.0
+offset_top = 39.0
+offset_right = 203.0
+offset_bottom = 78.0
+placeholder_text = "Enter Ip"
+metadata/_edit_use_anchors_ = true
+
+[node name="NameInput" type="LineEdit" parent="." unique_id=1463196640]
+offset_left = 6.0
+offset_top = 87.0
+offset_right = 207.0
+offset_bottom = 125.0
+placeholder_text = "Enter name here..."
+max_length = 15
+
+[node name="ErrorLabel" type="Label" parent="." unique_id=1466906113]
+offset_left = 8.0
+offset_top = 132.0
+offset_right = 207.0
+offset_bottom = 155.0
+theme_override_colors/font_color = Color(1, 0, 0.27450982, 1)
+
+[connection signal="pressed" from="HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="JoinButton" to="." method="_on_join_button_pressed"]
