@@ -32,7 +32,6 @@ Godot 4 multiplayer prop-hunt game. Survivors (FPS) try to survive against Suici
 
 ### 1. Game Map
 - [ ] Design a real map layout in `scenes/maps/map.tscn` with walls, cover objects, corridors, and open areas
-- [ ] Add a NavMesh (NavigationRegion3D) for future AI pathfinding
 - [ ] Set proper spawn points (Node3D markers) for both teams
 - [ ] Add lighting (DirectionalLight3D + ambient)
 

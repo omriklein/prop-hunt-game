@@ -7,6 +7,8 @@ const THROW_SPEED = 20.0
 const ROCK_SCENE = preload("res://scenes/props/rock.tscn")
 
 @onready var camera: Camera3D = $Camera3D
+@onready var mesh: Node3D = $Casual_2
+@onready var animation_tree: AnimationTree = $AnimationTree
 
 var rock_count := 0
 
@@ -67,17 +69,24 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
-
+	
+	var playback = animation_tree.get("parameters/playback")
+	if Input.is_action_just_pressed("throw"):
+		playback.travel("Gun_Shoot")
+	elif velocity.length() > 0.1:
+		playback.travel("Walk")
+	else:
+		playback.travel("Idle_Neutral")
 	move_and_slide()
 	
 @rpc("any_peer", "call_local")
 func die():
 	rock_count = 0
 	set_physics_process(false)
-	$MeshInstance3D.visible = false
+	mesh.visible = false
 	await get_tree().create_timer(2).timeout
 	global_position = Vector3(0, 2, 0)
-	$MeshInstance3D.visible = true
+	mesh.visible = true
 	set_physics_process(is_multiplayer_authority())
 	
 func add_rocks(amount: int = 1) -> void:
