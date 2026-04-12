@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
 const SPEED = 5.0
+const SPRINT_SPEED = 2 * SPEED
 const JUMP_VELOCITY = 4.5
 const EXPLOSION_SCENE = preload("res://scenes/props/explosion.tscn")
 
@@ -61,12 +62,15 @@ func _physics_process(delta: float) -> void:
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forwards", "move_backwords")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	var curr_speed = SPEED
+	if Input.is_action_pressed("sprint"):
+		curr_speed = SPRINT_SPEED
 	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
+		velocity.x = direction.x * curr_speed
+		velocity.z = direction.z * curr_speed
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, curr_speed)
+		velocity.z = move_toward(velocity.z, 0, curr_speed)
 	move_and_slide()
 	
 func _explode() -> void:

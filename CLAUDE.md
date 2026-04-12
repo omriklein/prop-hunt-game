@@ -83,6 +83,11 @@ Godot 4 multiplayer prop-hunt game. Survivors (FPS) try to survive against Suici
 - [x] Spawn rock crates at round start via MultiplayerSpawner (CrateSpawner under GameManager)
 - [x] After a crate is looted, respawns after 10s cooldown via schedule_crate_respawn RPC
 
+### 12. Suicider Sprint ✅
+- [x] Add sprint mechanic to suicider only (not survivor)
+- [x] Hold Shift to sprint: increase move speed (2x base speed)
+- [x] Wire sprint state in `scripts/suicider_controller.gd`
+
 ### 11. Player Names ✅
 - [x] Name input field on main menu; validated (min 2 chars, trimmed), stored in PlayerData autoload
 - [x] Name passed to game_manager.gd, stored in player_names dict, duplicate rejection with error feedback
