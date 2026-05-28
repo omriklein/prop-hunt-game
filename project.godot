@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 NetworkManager="*uid://bx84jr8jx381p"
 PlayerData="*uid://pslbweqibefn"
+LanDiscovery="*uid://hfdtn1lpf8sl"
 
 [input]
 

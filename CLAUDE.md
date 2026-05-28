@@ -95,3 +95,31 @@ Godot 4 multiplayer prop-hunt game. Survivors (FPS) try to survive against Suici
 - [x] Name input field on main menu; validated (min 2 chars, trimmed), stored in PlayerData autoload
 - [x] Name passed to game_manager.gd, stored in player_names dict, duplicate rejection with error feedback
 - [x] Scoreboard displays names; synced to all peers via sync_all_names RPC
+
+### 13. Fix Animations
+- [ ] Fix AnimationTree blend/transition issues (idle ↔ walk ↔ throw)
+- [ ] Sync remote player animations over network (other players see correct animation state)
+- [ ] Add walk/run animation to suicider (currently static)
+
+### 14. Scale Audit
+- [ ] Check scale of: survivor, suicider, rock, rock crate, explosion radius, map geometry
+- [ ] Adjust any models or collision shapes that feel too big/small in-game
+
+### 15. New Models
+- [ ] Replace house_plant suicider with a proper character/creature model
+- [ ] New rock model (replace primitive placeholder)
+- [ ] New rock crate model (replace primitive placeholder)
+
+### 16. Lobby Screen
+- [ ] Create `scenes/ui/lobby.tscn` — CanvasLayer shown before game starts
+- [ ] Display connected players list (names, roles)
+- [ ] Host sees a "Start Game" button; clients see "Waiting for host…"
+- [ ] Team assignment UI (Survivor / Suicider selection or auto-assign)
+- [ ] Wire lobby → game start flow in network_manager.gd / game_manager.gd
+
+### 17. Settings Menu
+- [ ] Create `scenes/ui/settings_menu.tscn` — accessible from pause menu and main menu
+- [ ] Mouse sensitivity slider (saved to config file)
+- [ ] FOV slider for survivor camera
+- [ ] Master / SFX / Music volume sliders (via AudioServer bus)
+- [ ] Save settings to `user://settings.cfg` on apply, load on game start
