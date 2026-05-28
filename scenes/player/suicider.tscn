@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b13d68vtcy2n7" path="res://scripts/suicider_controller.gd" id="1_8qbar"]
 [ext_resource type="PackedScene" uid="uid://b3lk73br0g3" path="res://scenes/ui/pause_menu.tscn" id="2_qri23"]
 [ext_resource type="PackedScene" uid="uid://cgwl16a8ut5yi" path="res://assets/House plant.glb" id="3_i74gf"]
+[ext_resource type="AudioStream" uid="uid://kcd564rluj20" path="res://assets/sounds/lalalala.mp3" id="4_3mfqm"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3r5kd"]
 
@@ -48,3 +49,6 @@ shape = SubResource("SphereShape3D_8qbar")
 
 [node name="House plant" parent="." unique_id=448866338 instance=ExtResource("3_i74gf")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.4967965, 0)
+
+[node name="SprintSound" type="AudioStreamPlayer3D" parent="." unique_id=2033401019]
+stream = ExtResource("4_3mfqm")

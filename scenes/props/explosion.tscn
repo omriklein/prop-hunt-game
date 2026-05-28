@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bi8vtvethqr3r"]
 
 [ext_resource type="Script" uid="uid://c0aexu0bwmkdn" path="res://scripts/explosion.gd" id="1_gm4qe"]
+[ext_resource type="AudioStream" uid="uid://d2wxg3jbpy3in" path="res://assets/sounds/explosion.mp3" id="2_x48v6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gm4qe"]
 transparency = 1
@@ -36,3 +37,7 @@ scale_amount_curve = SubResource("Curve_x48v6")
 color = Color(0.8666667, 0.627451, 0.08627451, 1)
 color_ramp = SubResource("Gradient_lfxm2")
 script = ExtResource("1_gm4qe")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=665180858]
+stream = ExtResource("2_x48v6")
+autoplay = true

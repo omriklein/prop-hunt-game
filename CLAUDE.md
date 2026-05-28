@@ -15,11 +15,12 @@ Godot 4 multiplayer prop-hunt game. Survivors (FPS) try to survive against Suici
 - Survivor: FPS CharacterBody3D, basic movement/jump, die/respawn via RPC
 - Suicider: 3rd-person CharacterBody3D, explosion mechanic kills nearby survivors, respawns
 - Scenes: map.tscn, test_game.tscn, main_menu.tscn, explosion.tscn, wall.tscn
-- Suicider uses house_plant.glb model; Survivor still uses placeholder MeshInstance3D
+- Suicider uses house_plant.glb model; Survivor uses Casual_2 model with AnimationTree
 - Rock collection and throwing working; scoring working (kills tracked by name, shown in UI)
 - Round timer working; pause menu working; player names working (validated, synced, duplicate rejection)
 - Rock crates spawn at round start via MultiplayerSpawner, respawn after 10s cooldown
-- No sounds
+- Survivor sounds: footsteps (looping, 3D, RPC), rock pickup, rock throw — all wired
+- Suicider sounds: explosion (AudioStreamPlayer3D in explosion.tscn, autoplay), sprint lalalala (logic done, awaiting audio file)
 
 ## Game Design
 - Suiciders run at survivors and self-destruct (AOE kill)
@@ -40,17 +41,20 @@ Godot 4 multiplayer prop-hunt game. Survivors (FPS) try to survive against Suici
 - [x] Replace the placeholder MeshInstance3D in `scenes/player/suicider.tscn`
 - [x] No animations — suicider is a prop (house plant), animations N/A
 
-### 3. Survivor Model + Animations
-- [ ] Import or create a 3D model for the survivor (humanoid, FPS arms or full body)
-- [ ] Replace the placeholder MeshInstance3D in `scenes/player/survivor.tscn`
-- [ ] Add AnimationPlayer/AnimationTree with states: idle, walk, run, throw
-- [ ] Wire animations to movement velocity in `scripts/survivor_controller.gd`
+### 3. Survivor Model + Animations ✅
+- [x] Import or create a 3D model for the survivor (humanoid, FPS arms or full body)
+- [x] Replace the placeholder MeshInstance3D in `scenes/player/survivor.tscn`
+- [x] Add AnimationPlayer/AnimationTree with states: idle, walk, throw (Gun_Shoot)
+- [x] Wire animations to movement velocity in `scripts/survivor_controller.gd`
 
 ### 4. Sounds
-- [ ] Add an AudioStreamPlayer3D to suicider for: footsteps, explosion charge, explosion blast
-- [ ] Add an AudioStreamPlayer3D to survivor for: footsteps, rock pickup, rock throw, hurt
+- [x] Suicider: explosion blast — AudioStreamPlayer3D in explosion.tscn, autoplay ON
+- [x] Suicider: "lalalala" sound — plays once on sprint start, full playback guaranteed; lalalala.mp3 assigned to SprintSound in suicider.tscn
+- [x] Survivor: footsteps — looping AudioStreamPlayer3D, RPC start/stop, heard by all players
+- [x] Survivor: rock pickup — AudioStreamPlayer3D in survivor.tscn, plays in add_rocks()
+- [x] Survivor: rock throw — AudioStreamPlayer3D in survivor.tscn, plays inside throw_rock RPC (heard by all)
 - [ ] Add ambient/background music to the game scene
-- [ ] Import .ogg or .wav audio files into `assets/sounds/`
+- [x] Import .ogg or .wav audio files into `assets/sounds/`
 
 ### 5. Rock Collection (Survivor) ✅
 - [x] Create `scenes/props/rock_crate.tscn` — Area3D crate, gives +10 rocks, networked removal

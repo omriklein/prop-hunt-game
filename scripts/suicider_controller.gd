@@ -10,9 +10,11 @@ const EXPLOSION_SCENE = preload("res://scenes/props/explosion.tscn")
 @onready var camera: Camera3D = $SpringArm3D/Camera3D
 @onready var mesh: Node3D = $"House plant"
 
+@onready var sprint_sound: AudioStreamPlayer3D = $SprintSound
 
 @onready var pause_menu: CanvasLayer = $PauseMenu
 var paused := false
+var is_sprinting := false
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED) # Disable cursor
@@ -65,6 +67,11 @@ func _physics_process(delta: float) -> void:
 	var curr_speed = SPEED
 	if Input.is_action_pressed("sprint"):
 		curr_speed = SPRINT_SPEED
+		if not is_sprinting:
+			is_sprinting = true
+			play_sprinting_sound.rpc()
+	else:
+		is_sprinting = false
 	if direction:
 		velocity.x = direction.x * curr_speed
 		velocity.z = direction.z * curr_speed
@@ -102,3 +109,8 @@ func _report_kill(peer_id: int) -> void:
 		return
 	var gam_manager = get_tree().current_scene.get_node("GameManager")
 	gam_manager.add_kill(peer_id)
+
+@rpc("any_peer", "call_local")
+func play_sprinting_sound() -> void:
+	if sprint_sound.stream != null:
+		sprint_sound.play()

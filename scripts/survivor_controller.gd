@@ -9,6 +9,12 @@ const ROCK_SCENE = preload("res://scenes/props/rock.tscn")
 @onready var camera: Camera3D = $Camera3D
 @onready var mesh: Node3D = $Casual_2
 @onready var animation_tree: AnimationTree = $AnimationTree
+# Sounds
+@onready var pickup_sound: AudioStreamPlayer3D = $PickupSound
+@onready var throw_sound: AudioStreamPlayer3D = $ThrowSound
+@onready var footstep_sound: AudioStreamPlayer3D = $FootstepSound
+var is_stepping := false
+
 
 var rock_count := 0
 
@@ -78,6 +84,13 @@ func _physics_process(delta: float) -> void:
 	else:
 		playback.travel("Idle_Neutral")
 	move_and_slide()
+	var should_step = is_on_floor() and velocity.length() > 0.1
+	if should_step and not is_stepping:
+		is_stepping = true
+		start_footsteps.rpc()
+	elif not should_step and is_stepping:
+		is_stepping = false
+		stop_footsteps.rpc()
 	
 @rpc("any_peer", "call_local")
 func die():
@@ -91,14 +104,23 @@ func die():
 	
 func add_rocks(amount: int = 1) -> void:
 	rock_count += amount
+	pickup_sound.play()
 	print("Rocks: ", rock_count)
 
 @rpc("any_peer", "call_local")
 func throw_rock(thrower_id) -> void:
+	throw_sound.play()
 	var rock = ROCK_SCENE.instantiate()
 	rock.set_meta("thrower_id", thrower_id) # store who threw it
 	get_tree().current_scene.add_child(rock)
 	# throwing the rock calculations
 	rock.global_position = camera.global_position + camera.global_basis.z * -1.0
 	rock.linear_velocity = -camera.global_basis.z *  THROW_SPEED
+
+@rpc("any_peer", "call_local")
+func start_footsteps() -> void:
+	footstep_sound.play()
 	
+@rpc("any_peer", "call_local")
+func stop_footsteps() -> void:
+	footstep_sound.stop()
