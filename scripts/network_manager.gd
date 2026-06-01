@@ -1,5 +1,6 @@
 extends Node
 
+const RELAY_URL := "ws://localhost:8787"
 const PORT = 777
 const MAX_PLAYERS = 8
 var host_ip := ""
@@ -13,8 +14,7 @@ func host_game_lan():
 	peer.create_server(PORT, MAX_PLAYERS)
 	multiplayer.multiplayer_peer = peer
 	LanDiscovery.start_host(PlayerData.player_name)
-	
-	# Get host Ip address
+
 	for address in IP.get_local_addresses():
 		if address.begins_with("192.168."):
 			host_ip = address
@@ -51,11 +51,42 @@ func _ready() -> void:
 	multiplayer.peer_disconnected.connect(_on_player_disconnected)
 
 func _on_player_connected(id):
-	if multiplayer.is_server():
+	if multiplayer.get_unique_id() == 1:
 		get_game_manager().spawn_player(id, "B")
 	print("Player connected: ", id)
 
 func _on_player_disconnected(id):
-	if multiplayer.is_server():
+	if multiplayer.get_unique_id() == 1:
 		get_game_manager().remove_player(id)
 	print("Player disconnected: ", id)
+
+var _internet_host_pending := false
+
+func _process(_delta: float) -> void:
+	if not _internet_host_pending:
+		return
+	if multiplayer.multiplayer_peer == null:
+		return
+	if multiplayer.multiplayer_peer.get_connection_status() == MultiplayerPeer.CONNECTION_CONNECTED:
+		_internet_host_pending = false
+		_finish_internet_host()
+
+func host_game_internet(code: String) -> void:
+	var peer := WebSocketMultiplayerPeer.new()
+	peer.create_client(RELAY_URL + "/" + code + "/host")
+	multiplayer.multiplayer_peer = peer
+	_internet_host_pending = true
+
+func _finish_internet_host() -> void:
+	get_tree().change_scene_to_file(GAME_SCENE)
+	await get_tree().scene_changed
+	var id := multiplayer.get_unique_id()
+	get_game_manager().spawn_player(id, "A")
+	get_game_manager().register_name(PlayerData.player_name, id)
+
+func join_game_internet(code: String) -> void:
+	var peer := WebSocketMultiplayerPeer.new()
+	peer.create_client(RELAY_URL + "/" + code + "/join")
+	multiplayer.multiplayer_peer = peer
+	multiplayer.connected_to_server.connect(_on_connected_ok)
+	multiplayer.connection_failed.connect(_on_connection_failed)

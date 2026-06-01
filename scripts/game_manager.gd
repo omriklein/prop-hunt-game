@@ -29,7 +29,7 @@ const ROCK_CRATE_TIMER = 10.0 # seconds until next spawn
 func _ready():
 	spawner.spawn_function = _spawn_player
 	crate_spawner.spawn_function = _spawn_crate
-	if multiplayer.is_server():
+	if multiplayer.get_unique_id() == 1:
 		_init_timers()
 		_spawn_all_crates()
 
@@ -51,7 +51,7 @@ func spawn_player(id: int, type: String):
 
 #region score\ kills
 func add_kill(peer_id: int) -> void:
-	if not multiplayer.is_server():
+	if multiplayer.get_unique_id() != 1:
 		return
 	if not kills.has(peer_id):
 		kills[peer_id] = 0
@@ -79,7 +79,7 @@ func _init_timers() -> void:
 	sync_time.rpc(ROUND_TIME)
 
 func _on_sync_timer_timeout() -> void:
-	if not multiplayer.is_server():
+	if multiplayer.get_unique_id() != 1:
 		return
 	var round_time_left = round_timer.time_left
 	sync_time.rpc(round_time_left)
@@ -115,13 +115,13 @@ func _spawn_crate(data: Dictionary) -> Node:
 
 @rpc("any_peer")
 func schedule_crate_respawn(spawn_index: int) -> void:
-	if not multiplayer.is_server():
+	if multiplayer.get_unique_id() != 1:
 		return
 	await get_tree().create_timer(ROCK_CRATE_TIMER).timeout
 	var spawn_point = crates_spawn_points.get_child(spawn_index)
 	crate_spawner.spawn({"index": spawn_index, "position": spawn_point.global_position})
 #endregion
-		
+
 @rpc("authority", "reliable")
 func name_rejected(reason: String):
 	print("name rejected!!")
@@ -130,7 +130,7 @@ func name_rejected(reason: String):
 
 @rpc("any_peer", "reliable")
 func register_name(name: String, peer_id: int) -> void:
-	if not multiplayer.is_server():
+	if multiplayer.get_unique_id() != 1:
 		return
 	if player_names.values().has(name):
 		print("name already taken")
@@ -145,7 +145,7 @@ func sync_player_names(names: Dictionary) -> void:
 	player_names = names
 
 func remove_player(id: int) -> void:
-	if not multiplayer.is_server():
+	if multiplayer.get_unique_id() != 1:
 		return
 	if players.has(id):
 		players[id].queue_free()

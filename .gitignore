@@ -7,3 +7,6 @@
 
 # Export credentials — may contain signing keys/passwords
 export_credentials.cfg
+
+# Node.js relay server dependencies
+relay/node_modules/

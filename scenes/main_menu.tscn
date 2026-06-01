@@ -43,5 +43,46 @@ offset_top = 44.0
 offset_right = 422.0
 offset_bottom = 75.0
 
+[node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=100000001]
+
+[node name="HostInternetButton" type="Button" parent="." unique_id=100000002]
+offset_left = 8.0
+offset_top = 165.0
+offset_right = 140.0
+offset_bottom = 196.0
+text = "Host Internet"
+
+[node name="RoomCodeLabel" type="Label" parent="." unique_id=100000003]
+offset_left = 8.0
+offset_top = 205.0
+offset_right = 300.0
+offset_bottom = 230.0
+
+[node name="StartInternetButton" type="Button" parent="." unique_id=100000004]
+visible = false
+offset_left = 8.0
+offset_top = 238.0
+offset_right = 140.0
+offset_bottom = 269.0
+text = "Start Game"
+
+[node name="CodeInput" type="LineEdit" parent="." unique_id=100000005]
+offset_left = 147.0
+offset_top = 203.0
+offset_right = 385.0
+offset_bottom = 234.0
+placeholder_text = "Room Code (e.g. BARN-4921)"
+
+[node name="JoinInternetButton" type="Button" parent="." unique_id=100000006]
+offset_left = 9.0
+offset_top = 203.0
+offset_right = 141.0
+offset_bottom = 234.0
+text = "Join Internet"
+
 [connection signal="pressed" from="HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_completed"]
+[connection signal="pressed" from="HostInternetButton" to="." method="_on_host_internet_pressed"]
+[connection signal="pressed" from="StartInternetButton" to="." method="_on_start_internet_pressed"]
+[connection signal="pressed" from="JoinInternetButton" to="." method="_on_join_internet_pressed"]
